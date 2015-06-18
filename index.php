@@ -27,6 +27,8 @@
 		if ($defaultLang == "sw") echo "<script src=\"lib/packages/timeago_jquery/jquery.timeago.sw.js\"></script>";
 	?>
 
+	<link href="css/pagestyle.css" rel="stylesheet"> <!-- --!>
+	
 	<!-- For iPhone Retina display: -->
 	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/thermometer.png">
 	<!-- For iPad: -->

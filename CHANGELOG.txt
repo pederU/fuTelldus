@@ -11,8 +11,13 @@
   _____________________________________________________________________________
  
  
- 
- 
+	18.06.2015
+	---------------------------------------------------------------
+	CHANGES:
+	- Uses Bootstrap CDN 3.3.5
+	- Updated index.php with a stylesheet so that the drop-down meny for the sensors on the chert page don't get hidden.
+
+
 	22.05.2015
 	---------------------------------------------------------------
 	CHANGES:

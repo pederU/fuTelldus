@@ -83,6 +83,7 @@
 					echo "<th>".$lang['Name']."</th>";
 					echo "<th>".$lang['Temperature']."</th>";
 					echo "<th>".$lang['Humidity']."</th>";
+					echo "<th>".$lang['Battery']."</th>";
 					echo "<th>".$lang['Last update']."</th>";
 					echo "<th>".$lang['Location']."</th>";
 					echo "<th width='23%'></th>";
@@ -96,7 +97,7 @@
 
 				while ($row = $result->fetch_array()) {
 					
-					$sValueQuery = $mysqli->query("SELECT temp_value, humidity_value, time_updated FROM ".$db_prefix."sensors_log WHERE sensor_id='{$row['sensor_id']}' ORDER BY time_updated DESC LIMIT 1");
+					$sValueQuery = $mysqli->query("SELECT temp_value, humidity_value, battery, time_updated FROM ".$db_prefix."sensors_log WHERE sensor_id='{$row['sensor_id']}' ORDER BY time_updated DESC LIMIT 1");
 					$sValues = $sValueQuery->fetch_array();
 
 					echo "<tr>";
@@ -105,9 +106,18 @@
 							echo "<div class='visible-phone'>" . ago($sValues['time_updated']) . "</div>";
 						echo "</td>";
 						
-
 						echo "<td>{$sValues['temp_value']}&deg;</td>";
+
 						echo "<td>{$sValues['humidity_value']}%</td>";
+							if ($sValues['battery']==255) {
+								echo "<td><i class='fa fa-battery-0'></i></td>";
+							} elseif ($sValues['battery']==254) {
+								echo "<td><i class='fa fa-question'></i></td>";
+							} elseif ($sValues['battery']==253) {
+								echo "<td><i class='fa fa-battery-4'></i></td>";
+							} else {
+								echo "<td>".$sValues['battery']." %</td>";
+							}
 
 						echo "<td class='hidden-xs'>" . ago($sValues['time_updated']) . "</td>";
 

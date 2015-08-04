@@ -8,7 +8,7 @@
 -- PHP-Versjon: 5.3.17
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+SET time_zone = "+01:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -124,6 +124,7 @@ CREATE TABLE IF NOT EXISTS `futelldus_sensors_log` (
   `time_updated` int(11) NOT NULL,
   `temp_value` double NOT NULL,
   `humidity_value` double NOT NULL,
+  `battery` int(5) NOT NULL,
   PRIMARY KEY (`sensor_id`,`time_updated`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

@@ -38,7 +38,6 @@
         echo "<table class='table table-striped table-hover'>";
             echo "<tbody>";
 
-
                 // Temperature
                 echo "<tr>";
                     echo "<td>".$lang['Avrage']." ".strtolower($lang['Temperature'])."</td>";
@@ -156,6 +155,20 @@
 					echo "<td>".$xmldata->timezoneoffset."</td>";
 				echo "</tr>";
 
+				echo "<tr>";
+					echo "<td>".$lang['Battery']."</td>";
+					$battery = trim($xmldata->battery);
+					if ($battery==255) {
+						echo "<td>".$lang['Battery low']."</td>";
+					} elseif ($battery==254) {
+						echo "<td>".$lang['Battery status unknown']."</td>";
+					} elseif ($battery==253) {
+						echo "<td>".$lang['Battery ok']."</td>";
+					} else {
+						echo "<td>".$battery." %</td>";
+					}
+				echo "</tr>";
+
 			echo "</tbody>";
 		echo "</table>";
 	echo "</div>";
@@ -175,7 +188,6 @@
 
 		$query = "SELECT * FROM ".$db_prefix."sensors_log WHERE sensor_id='$getID' ORDER BY time_updated DESC LIMIT 100";
 	    $result = $mysqli->query($query);
-
 
 	    echo "<table class='table table-striped table-hover'>";
 			
@@ -202,7 +214,6 @@
 			echo "<tbody>";
 
 	   	echo "</table>";
-
 
 	?>
 </div>

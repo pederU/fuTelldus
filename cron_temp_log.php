@@ -1,18 +1,16 @@
 <?php
-	ob_start();
-	session_start();
-
-
+if (empty($_SERVER['argc'])){
+        echo "Start " . date('Y-m-d H:i:s') . "<br>";
+        ob_start();
+        session_start();
+}
 	
-
 	/* Connect to database
 	--------------------------------------------------------------------------- */
 	require("lib/config.inc.php");
 
 	// Create DB-instance
 	$mysqli = new Mysqli($host, $username, $password, $db_name); 
-
-	 
 
 	// Check for connection errors
 	if ($mysqli->connect_errno) {
@@ -22,29 +20,13 @@
 	// Set DB charset
 	mysqli_set_charset($mysqli, "utf8");
 
-
-
-
 	/* Get oAuth class
 	--------------------------------------------------------------------------- */
 	require_once 'HTTP/OAuth/Consumer.php';
 
-
-
-
-
-
-
-
-
-
-
 	/* ##################################################################################################################### */
 	/* ######################################## SCRIPT RUNS BELOW THIS LINE ################################################ */
 	/* ##################################################################################################################### */
-
-
-
 
 	/* Find users
 	--------------------------------------------------------------------------- */
@@ -52,9 +34,6 @@
     $result = $mysqli->query($query);
 
     while ($row = $result->fetch_array()) {
-
-
-
 
     	/* Connect to telldus
 		--------------------------------------------------------------------------- */
@@ -71,8 +50,6 @@
 
 		define('BASE_URL', 'http://'.$_SERVER["SERVER_NAME"].dirname($_SERVER['REQUEST_URI']));
 
-
-
 		/* Get sensors for user that should me monitored
 		--------------------------------------------------------------------------- */
     	$query2 = "SELECT * FROM ".$db_prefix."sensors WHERE user_id='{$row['user_id']}' AND monitoring='1'";
@@ -85,30 +62,28 @@
 			$params = array('id'=> $sensor['sensor_id']);
 			$response = $consumer->sendRequest(constant('REQUEST_URI').'/sensor/info', $params, 'GET');
 
-
 			// Get XML and create array with SimpleXMLElement
 			$xmlData = $response->getBody();
 			$xml = new SimpleXMLElement($xmlData);
-
 
 			// Trim values
 			$lastUpdated 	= trim($xml->lastUpdated);
 			$tempValue 		= trim($xml->data[0]['value']);
 			$humidityValue 	= trim($xml->data[1]['value']);
+			$battery		= trim($xml->battery);
 
 			// Add values to DB
 			$queryInsert = "REPLACE INTO ".$db_prefix."sensors_log SET 
 							sensor_id='". $sensor['sensor_id'] ."', 
 							time_updated='". $lastUpdated ."', 
 							temp_value='". $tempValue ."', 
-							humidity_value='". $humidityValue ."'";
+							humidity_value='". $humidityValue ."',
+							battery='". $battery ."'";
 			$resultInsert = $mysqli->query($queryInsert);
 	    
-
-
-
-
 	    } //end-sensorlist
     } //end-while-users
-
+if (empty($_SERVER['argc'])){
+	echo "Done " . date('Y-m-d H:i:s') . "<br>";
+}
 ?>

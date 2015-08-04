@@ -111,6 +111,9 @@ $lang = array(
 	"Sensors description" => "<p>Lägg till dina sensorer till cronjob för att logga sensordata i databasen.</p><p>Sensorlistan hämtas med nycklarna som är tillagda under <a href='?page=settings&view=user'>din användarprofil</a>.</p>",
 	"Non public" => "Icke offentlig",
 	"Public" => "Offentligt",
+	"Battery ok" => "Batteri ok",
+	"Battery low" => "Låg batterinivå",
+	"Battery status unknown" => "Batteristatus okänd",
 
 
 	// Shared sensors
